@@ -11,8 +11,29 @@ public class DelayTaskProperties {
 
     private Integer capacity = 10000;
 
+    private String delayQueueName = "delay-task-queue";
+
+
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getType() {
         return type;
+    }
+
+    public String getDelayQueueName() {
+        return delayQueueName;
+    }
+
+    public void setDelayQueueName(String delayQueueName) {
+        this.delayQueueName = delayQueueName;
     }
 
     public void setType(String type) {
@@ -41,6 +62,8 @@ public class DelayTaskProperties {
                 "type='" + type + '\'' +
                 ", name='" + name + '\'' +
                 ", capacity=" + capacity +
+                ", delayQueueName='" + delayQueueName + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

@@ -80,7 +80,7 @@ public class JDKDelayTaskHolder implements DelayTask {
                     }
                 }
             }, name);
-            logger.info( name + " start success");
+            logger.info( name + " start success with jdk");
             thread.start();
             consumerThreadList.add(thread);
         }

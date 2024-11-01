@@ -31,6 +31,10 @@
             <groupId>com.ssn.delay</groupId>
             <artifactId>delay-task-spring-boot-jdk</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ssn.delay</groupId>
+            <artifactId>delay-task-spring-boot-redisson</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
