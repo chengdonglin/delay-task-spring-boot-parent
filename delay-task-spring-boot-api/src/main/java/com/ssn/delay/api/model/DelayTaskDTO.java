@@ -52,4 +52,14 @@ public class DelayTaskDTO<T> implements Delayed {
     public void setData(T data) {
         this.data = data;
     }
+
+
+    @Override
+    public String toString() {
+        return "DelayTaskDTO{" +
+                "messageType='" + messageType + '\'' +
+                ", taskExecuteTimeMs=" + taskExecuteTimeMs +
+                ", data=" + data.toString() +
+                '}';
+    }
 }

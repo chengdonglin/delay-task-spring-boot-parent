@@ -34,4 +34,13 @@ public class DelayTaskProperties {
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
+
+    @Override
+    public String toString() {
+        return "DelayTaskProperties{" +
+                "type='" + type + '\'' +
+                ", name='" + name + '\'' +
+                ", capacity=" + capacity +
+                '}';
+    }
 }

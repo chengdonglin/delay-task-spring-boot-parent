@@ -1,8 +1,10 @@
 package com.ssn.delay.jdk;
 
+import org.slf4j.Logger;
 import com.ssn.delay.api.DelayTask;
 import com.ssn.delay.api.TaskProcessor;
 import com.ssn.delay.api.model.DelayTaskDTO;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.concurrent.DelayQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class JDKDelayTaskHolder implements DelayTask {
+
+    private final Logger logger = LoggerFactory.getLogger(JDKDelayTaskHolder.class);
 
     private String threadName;
 
@@ -76,6 +80,7 @@ public class JDKDelayTaskHolder implements DelayTask {
                     }
                 }
             }, name);
+            logger.info( name + " start success");
             thread.start();
             consumerThreadList.add(thread);
         }
