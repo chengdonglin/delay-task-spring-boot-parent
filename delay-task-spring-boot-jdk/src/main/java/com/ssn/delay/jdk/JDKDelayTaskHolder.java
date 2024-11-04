@@ -1,49 +1,36 @@
 package com.ssn.delay.jdk;
 
+import com.ssn.delay.api.AbstractDelayTaskHolder;
 import org.slf4j.Logger;
-import com.ssn.delay.api.DelayTask;
 import com.ssn.delay.api.TaskProcessor;
 import com.ssn.delay.api.model.DelayTaskDTO;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class JDKDelayTaskHolder implements DelayTask {
+public class JDKDelayTaskHolder extends AbstractDelayTaskHolder {
 
     private final Logger logger = LoggerFactory.getLogger(JDKDelayTaskHolder.class);
-
-    private String threadName;
 
     private Integer capacity = 10000;
 
     //延迟队列
     private DelayQueue<DelayTaskDTO> delayQueue = new DelayQueue<>();
 
-    //是否已停止
-    private volatile boolean stop = false;
-
     //当前待处理的任务数量
     private AtomicInteger size = new AtomicInteger(0);
 
-    private List<Thread> consumerThreadList;
-
-    private TaskProcessor taskProcessor;
-
 
     public JDKDelayTaskHolder(String threadName, int capacity, TaskProcessor taskProcessor) {
+        super(taskProcessor, threadName);
         if (capacity <= 0) {
             throw new IllegalArgumentException("Illegal Capacity: " + capacity);
         }
         if (taskProcessor == null) {
             throw new IllegalArgumentException("TaskProcessor cannot be null");
         }
-        this.threadName = threadName;
         this.capacity = capacity;
-        this.consumerThreadList = new ArrayList<>();
-        this.taskProcessor = taskProcessor;
         this.start();
     }
 
@@ -86,44 +73,4 @@ public class JDKDelayTaskHolder implements DelayTask {
         }
     }
 
-    @Override
-    public void stop() {
-        this.stop= true;
-        for (Thread thread : consumerThreadList) {
-            thread.interrupt();
-        }
-    }
-
-
-    public String getThreadName() {
-        return threadName;
-    }
-
-    public void setThreadName(String threadName) {
-        this.threadName = threadName;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public DelayQueue<DelayTaskDTO> getDelayQueue() {
-        return delayQueue;
-    }
-
-    public void setDelayQueue(DelayQueue<DelayTaskDTO> delayQueue) {
-        this.delayQueue = delayQueue;
-    }
-
-    public boolean isStop() {
-        return stop;
-    }
-
-    public void setStop(boolean stop) {
-        this.stop = stop;
-    }
 }
