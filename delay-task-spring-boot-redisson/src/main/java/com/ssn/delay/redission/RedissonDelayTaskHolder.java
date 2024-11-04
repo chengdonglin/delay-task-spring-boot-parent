@@ -25,11 +25,11 @@ public class RedissonDelayTaskHolder extends AbstractDelayTaskHolder {
     private final RDelayedQueue<DelayTaskDTO> delayedQueue;
 
     public RedissonDelayTaskHolder(RedissonClient redissonClient, DelayTaskProperties delayTaskProperties, TaskProcessor taskProcessor) {
-        super(taskProcessor,delayTaskProperties.getName());
+        super(taskProcessor,delayTaskProperties);
         this.redissonClient = redissonClient;
         this.delayTaskProperties = delayTaskProperties;
-        this.blockingQueue = redissonClient.getBlockingQueue(delayTaskProperties.getDelayQueueName());
-        this.delayedQueue =  redissonClient.getDelayedQueue(this.blockingQueue);
+        this.blockingQueue = this.redissonClient.getBlockingQueue(delayTaskProperties.getDelayQueueName());
+        this.delayedQueue =  this.redissonClient.getDelayedQueue(this.blockingQueue);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class RedissonDelayTaskHolder extends AbstractDelayTaskHolder {
 
     @Override
     public void start() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < this.delayTaskProperties.getConcurrentConsumers(); i++) {
             String name = String.format("DelayTaskProcessor-ConsumerThread-%s-%d", delayTaskProperties.getName(), i);
             Thread thread = new Thread(() -> {
                 while (!stop) {

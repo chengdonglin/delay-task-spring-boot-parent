@@ -12,13 +12,19 @@ public abstract class AbstractDelayTaskHolder implements DelayTask{
     //是否已停止
     protected volatile boolean stop = false;
 
-    protected final String threadName;
+    protected final DelayTaskProperties properties;
 
 
-    protected AbstractDelayTaskHolder(TaskProcessor taskProcessor, String threadName) {
+    protected AbstractDelayTaskHolder(TaskProcessor taskProcessor, DelayTaskProperties properties) {
+        if (properties.getConcurrentConsumers() <=0) {
+            properties.setConcurrentConsumers(5);
+        }
+        if (taskProcessor == null) {
+            throw new IllegalArgumentException("TaskProcessor cannot be null");
+        }
         this.taskProcessor = taskProcessor;
-        consumerThreadList = new ArrayList<>();
-        this.threadName = threadName;
+        this.properties = properties;
+        this.consumerThreadList = new ArrayList<>(properties.getConcurrentConsumers());
     }
 
 
@@ -30,5 +36,9 @@ public abstract class AbstractDelayTaskHolder implements DelayTask{
         }
     }
 
+
+    public String getThreadName(int i) {
+        return String.format("DelayTaskProcessor-ConsumerThread-%s-%d", this.properties.getName(), i);
+    }
 
 }

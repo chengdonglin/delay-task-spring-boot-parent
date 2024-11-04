@@ -1,6 +1,7 @@
 package com.ssn.delay.jdk;
 
 import com.ssn.delay.api.AbstractDelayTaskHolder;
+import com.ssn.delay.api.DelayTaskProperties;
 import org.slf4j.Logger;
 import com.ssn.delay.api.TaskProcessor;
 import com.ssn.delay.api.model.DelayTaskDTO;
@@ -15,6 +16,7 @@ public class JDKDelayTaskHolder extends AbstractDelayTaskHolder {
 
     private Integer capacity = 10000;
 
+
     //延迟队列
     private DelayQueue<DelayTaskDTO> delayQueue = new DelayQueue<>();
 
@@ -22,15 +24,12 @@ public class JDKDelayTaskHolder extends AbstractDelayTaskHolder {
     private AtomicInteger size = new AtomicInteger(0);
 
 
-    public JDKDelayTaskHolder(String threadName, int capacity, TaskProcessor taskProcessor) {
-        super(taskProcessor, threadName);
+    public JDKDelayTaskHolder(DelayTaskProperties properties, TaskProcessor taskProcessor) {
+        super(taskProcessor, properties);
         if (capacity <= 0) {
             throw new IllegalArgumentException("Illegal Capacity: " + capacity);
         }
-        if (taskProcessor == null) {
-            throw new IllegalArgumentException("TaskProcessor cannot be null");
-        }
-        this.capacity = capacity;
+        this.capacity = properties.getCapacity();
         this.start();
     }
 
@@ -53,8 +52,8 @@ public class JDKDelayTaskHolder extends AbstractDelayTaskHolder {
 
     @Override
     public void start() {
-        for (int i = 0; i < 5; i++) {
-            String name = String.format("DelayTaskProcessor-ConsumerThread-%s-%d", this.threadName, i);
+        for (int i = 0; i < properties.getConcurrentConsumers(); i++) {
+            String name = getThreadName(i);
             Thread thread = new Thread(() -> {
                 while (!stop) {
                     try {

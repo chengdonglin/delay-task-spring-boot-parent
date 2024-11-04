@@ -50,7 +50,7 @@ public class DelayTaskAutoConfiguration {
         DelayTaskProperties delayTaskProperties = this.delayTaskProperties;
         if (delayTaskProperties.getType().equalsIgnoreCase("jdk")) {
             log.info("start jdk delay task");
-            return new JDKDelayTaskHolder(delayTaskProperties.getName(), delayTaskProperties.getCapacity(),taskProcessor);
+            return new JDKDelayTaskHolder(delayTaskProperties,taskProcessor);
         }
         if (delayTaskProperties.getType().equalsIgnoreCase("redisson")) {
             log.info("start redisson delay task");
