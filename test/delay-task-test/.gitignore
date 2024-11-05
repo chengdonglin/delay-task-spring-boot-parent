@@ -36,4 +36,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
-/test/delay-task-test/.idea/misc.xml
+/.idea/.gitignore

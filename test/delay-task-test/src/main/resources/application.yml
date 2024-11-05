@@ -1,0 +1,6 @@
+delay:
+  type: jdk
+  concurrent-consumers: 2
+
+server:
+  port: 9096
