@@ -1,6 +1,7 @@
 delay:
   type: jdk
   concurrent-consumers: 2
+  url: 127.0.0.1:6379
 
 server:
   port: 9096

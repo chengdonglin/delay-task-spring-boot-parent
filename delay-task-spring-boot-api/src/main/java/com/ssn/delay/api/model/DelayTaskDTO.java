@@ -12,6 +12,8 @@ public class DelayTaskDTO<T> implements Delayed {
 
     private Long taskExecuteTimeMs;
 
+    private String key;
+
     private T data;
 
     @Override
@@ -53,13 +55,21 @@ public class DelayTaskDTO<T> implements Delayed {
         this.data = data;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     @Override
     public String toString() {
         return "DelayTaskDTO{" +
                 "messageType='" + messageType + '\'' +
                 ", taskExecuteTimeMs=" + taskExecuteTimeMs +
-                ", data=" + data.toString() +
+                ", key='" + key + '\'' +
+                ", data=" + data +
                 '}';
     }
 }

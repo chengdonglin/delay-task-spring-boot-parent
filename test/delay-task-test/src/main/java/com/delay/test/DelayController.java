@@ -24,6 +24,7 @@ public class DelayController {
     public void delay(@PathVariable Long time) {
         DelayTaskDTO<String> dto = new DelayTaskDTO<>();
         dto.setData(UUID.randomUUID().toString());
+        dto.setKey("test");
         dto.setMessageType("test");
         dto.setTaskExecuteTimeMs(System.currentTimeMillis() + time);
         delayTask.put(dto);
