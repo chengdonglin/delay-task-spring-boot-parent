@@ -20,6 +20,8 @@ public class DelayTaskProperties {
     // 消费者数量
     private Integer concurrentConsumers = 5;
 
+    // 模式， 集群还是单机
+    private String mode = "single";
 
     private String url;
 
@@ -71,6 +73,14 @@ public class DelayTaskProperties {
         this.concurrentConsumers = concurrentConsumers;
     }
 
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
     @Override
     public String toString() {
         return "DelayTaskProperties{" +
@@ -79,6 +89,7 @@ public class DelayTaskProperties {
                 ", capacity=" + capacity +
                 ", delayQueueName='" + delayQueueName + '\'' +
                 ", concurrentConsumers=" + concurrentConsumers +
+                ", mode='" + mode + '\'' +
                 ", url='" + url + '\'' +
                 '}';
     }
